@@ -9,3 +9,4 @@ from .debug import *  # noqa
 from .graphics import *  # noqa
 from .tools import *  # noqa
 from .effect import *  # noqa
+from .app import *  # noqa
