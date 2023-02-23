@@ -13,8 +13,7 @@ __pycache__/
 .cache
 
 # dev
-docs/dev/
-docs/test/
 dev/
 build_test
 TODO.txt
+temp/
