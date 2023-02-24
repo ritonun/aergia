@@ -34,9 +34,3 @@ class SaveLoadSystem:
 
     def optimized_save(self, file_key, data):
         pass
-
-
-if __name__ == '__main__':
-    s = SaveLoadSystem("../../temp/", {"save1": "save1.json", "save2": "save2.json"})
-    d = s.load_file("save1")
-    s.save_data("save2", d)
