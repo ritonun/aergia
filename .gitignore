@@ -19,3 +19,4 @@ dev/
 temp/
 scripts/
 pypi_test/
+dev.py

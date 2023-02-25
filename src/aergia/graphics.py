@@ -1,7 +1,12 @@
 import pygame
 
 
-def resize_surface_to_display_keep_ratio(display, surface):
+def resize_surface_to_surface(display, surface):
+    surf = pygame.transform.scale(surface, display.get_size())
+    return surf
+
+
+def resize_surface_to_display_keep_ratio(display, surface, return_surf=False):
     """
     Scale a surface to display with black strip to keep the ratio
     """
@@ -21,4 +26,7 @@ def resize_surface_to_display_keep_ratio(display, surface):
             offset_w = (w - size[0]) / 2
             offset[0] = int(offset_w)
 
-    return size, offset
+    if return_surf:
+        surf = pygame.transform.scale(surface, size)
+        return surf, offset
+    return size, offset, surf
