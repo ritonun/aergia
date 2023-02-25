@@ -7,10 +7,12 @@ dist/
 __pycache__/
 *.so
 *~
+.vscode
 
 # due to using tox and pytest
 .tox
 .cache
+*.pytest_cache
 
 # local dev/test
 dev/

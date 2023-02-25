@@ -1,5 +1,2 @@
-import os
 import sys
-PROJECT_PATH = os.getcwd()
-SOURCE_PATH = os.path.join(PROJECT_PATH, "src")
-sys.path.append(SOURCE_PATH)
+sys.path.insert(0, r'C:\\Users\\jerem\Documents\\.Projet\\Prgm\\Python\\PYGAME\\Aergia\\src')  # noqa
