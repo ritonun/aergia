@@ -16,7 +16,7 @@ def create_temp_folder():
 
 
 def delete_temp_folder():
-    path = "temp/"
+    path = "temp"
     try:
         os.rmdir(path)
     except OSError:
@@ -31,13 +31,13 @@ class TestSaveLoadSystem:
         # create a tem
         create_temp_folder()
         file_dict = {"save1": "save1.json",
-                        "save2": "save2.json"}
+                     "save2": "save2.json"}
         s = SaveLoadSystem("temp/", file_dict)
         delete_temp_folder()
         s1 = s.get_path("save1")
         result = "temp/save1.json"
         assert s1 == result
-    
+
     def test_save_and_load(self):
         create_temp_folder()
         file_dict = {"save1": "save1.json", "save2": "save2.json"}
@@ -46,5 +46,4 @@ class TestSaveLoadSystem:
         s.save_data("save1", data)
         loaded_data = s.load_file("save1")
         delete_temp_folder()
-        assert loaded_data["var"] == 1.0        
-
+        assert loaded_data["var"] == 1.0
