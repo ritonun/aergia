@@ -9,3 +9,4 @@ Unreleased
 	- License, README, CHANGELOG
 	- Basic code functionnality
 	- Packaging setup files
+	- PyTest test
