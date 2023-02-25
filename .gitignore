@@ -12,9 +12,8 @@ __pycache__/
 .tox
 .cache
 
-# dev
+# local dev/test
 dev/
-build_test
-TODO.txt
 temp/
 scripts/
+pypi_test/
