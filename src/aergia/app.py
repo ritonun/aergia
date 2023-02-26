@@ -32,9 +32,6 @@ class App:
         if event.type == pygame.QUIT:
             self.running = False
 
-        if event.type == pygame.K_F1:
-            print('a')
-
     def update_app(self):
         pass
 
