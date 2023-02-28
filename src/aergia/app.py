@@ -42,7 +42,7 @@ class App:
     def cleanup(self):
         pygame.quit()
 
-    def run(self):
+    def mainloop(self):
         if self.init_app() is False:
             self.running = False
 
@@ -56,7 +56,7 @@ class App:
                 offset_screen = resize_surface_to_display_keep_ratio(self.display, self.screen, return_surf=True)
                 self.display.blit(offset_screen[0], offset_screen[1])
             else:
-                self.display.blit(resize_surface_to_surface(self.display, self.screen)[0], self.screen_pos)
+                self.display.blit(resize_surface_to_surface(self.display, self.screen), self.screen_pos)
 
             pygame.display.update()
             self.clock.tick(self.FPS)

@@ -3,6 +3,62 @@ import pygame
 from .tools import Animation
 
 
+class RessourceLoader:
+    def __init__(self, ressource_path):
+        self.res_path = ressource_path
+        self.tilesets = {}
+        self.images = {}
+
+        # DEBUG
+        self.index = 0
+        self.index_tileset = 0
+
+    def load_tilesets(self, tilesets_path, tile_width, tile_height):
+        for tileset_path in tilesets_path:
+            path = self.res_path + tileset_path
+            tileset_files = load_folder(path)
+            for file in tileset_files:
+                tileset = load_tileset_image(file, tile_width, tile_height)
+                name = get_file_name_from_path(file)
+                self.tilesets[name] = tileset
+
+    def load_images(self, images_paths):
+        for image_path in images_paths:
+            if isinstance(image_path, tuple):
+                path = self.res_path + image_path[0]
+            else:
+                path = self.res_path + image_path
+            images_files = load_folder(path)
+            for file in images_files:
+                image = pygame.image.load(file).convert_alpha()
+                if isinstance(image_path, tuple):
+                    ratio = image_path[1]
+                    image = pygame.transform.scale(image, (image.get_width() * ratio, image.get_height() * ratio))
+                name = get_file_name_from_path(file)
+                self.images[name] = image
+
+    # DEBUG ONLY
+    def draw(self, display):
+        self.index += 1
+        if self.index % 60 == 0:
+            self.index_tileset += 1
+        if self.index_tileset > len(self.images):
+            self.index_tileset = 0
+
+        count = 0
+        for key in self.images:
+            if count == self.index_tileset:
+                display.blit(self.images[key], (0, 0))
+            count += 1
+
+
+def get_file_name_from_path(path):
+    file_name_index = path.rfind("/")
+    file_name = path[file_name_index:]
+    file_name = file_name.replace("/", "").replace(find_extension(file_name), "")
+    return file_name
+
+
 def find_extension(name):
     name_index = name.rfind('.')
     ext = name[name_index:]
