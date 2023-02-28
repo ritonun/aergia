@@ -19,13 +19,12 @@ class App:
     def init_app(self):
         pygame.init()
 
-        if self.icon is not None:
-            pygame.display.set_icon(self.icon)
-
         self.display = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self.screen = pygame.Surface(self.display.get_size(), pygame.SRCALPHA)
         self.screen_pos = [0, 0]
         pygame.display.set_caption(self.caption)
+        if self.icon is not None:
+            pygame.display.set_icon(self.icon.convert_alpha())
 
         self.clock = pygame.time.Clock()
 
