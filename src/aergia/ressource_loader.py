@@ -13,6 +13,9 @@ class RessourceManager:
         self.index_tileset = 0
 
     def load_tilesets(self, tilesets_path, tile_width, tile_height):
+        if isinstance(tilesets_path, list) is False:
+            raise TypeError("tilesets_path must be a list of path")
+
         for tileset_path in tilesets_path:
             path = self.res_path + tileset_path
             tileset_files = load_folder(path)
