@@ -1,6 +1,5 @@
 import random
 import pygame
-from .tools import Animation
 
 
 class ScreenShake:
@@ -41,27 +40,6 @@ class ScreenShake:
 
     def get_offset(self):
         return [int(self.offset[0]), int(self.offset[1])]
-
-
-class VFX:
-    """
-    vfxs_data: dict with info to create anim -> vfxs_data[key] = [list_img/tileset, speed, bool: loop]
-    """
-
-    def __init__(self, vfxs_data):
-        self.vfxs_data = vfxs_data
-        self.animation_group = pygame.sprite.Group()
-
-    def add_anim(self, animation_key, x, y):
-        vfx = self.vfxs_data[animation_key]
-        animation = Animation(x, y, vfx[0], vfx[1], vfx[2])
-        self.animation_group.add(animation)
-
-    def update(self):
-        self.animation_group.update()
-
-    def draw(self, display):
-        self.animation_group.draw(display)
 
 
 class NeonRect():
@@ -184,3 +162,24 @@ class NeonLine():
         pos = [self.pos[0] + offset[0], self.pos[1] + offset[1]]
         display.blit(self.surface, pos)
         pygame.draw.line(display, self.color, self.start, self.end)
+
+
+"""
+class VFX:
+    # vfxs_data: dict with info to create anim -> vfxs_data[key] = [list_img/tileset, speed, bool: loop]
+
+    def __init__(self, vfxs_data):
+        self.vfxs_data = vfxs_data
+        self.animation_group = pygame.sprite.Group()
+
+    def add_anim(self, animation_key, x, y):
+        vfx = self.vfxs_data[animation_key]
+        animation = Animation(x, y, vfx[0], vfx[1], vfx[2])
+        self.animation_group.add(animation)
+
+    def update(self):
+        self.animation_group.update()
+
+    def draw(self, display):
+        self.animation_group.draw(display)
+"""
