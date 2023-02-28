@@ -2,7 +2,7 @@ import os
 import pygame
 
 
-class RessourceLoader:
+class RessourceManager:
     def __init__(self, ressource_path):
         self.res_path = ressource_path
         self.tilesets = {}
