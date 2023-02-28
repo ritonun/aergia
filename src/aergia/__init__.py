@@ -12,3 +12,4 @@ from .effect import *  # noqa
 from .app import *  # noqa
 from .saveload import *  # noqa
 from .ressource_loader import *  # noqa
+from .scene import *  # noqa

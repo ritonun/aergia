@@ -7,6 +7,7 @@ class App:
     def __init__(self, size=(1000, 600)):
         self.running = False
         self.display = None
+        self.scene_manager = None
         self.size = self.width, self.height = size
         self.caption = "Aergia Engine Sandbox"
         self.icon = None
@@ -50,9 +51,14 @@ class App:
             dt = self.clock.tick(self.FPS) / 1000
             for event in pygame.event.get():
                 self.events_handling(event)
-            self.update_app(dt)
-            self.render_app()
 
+            if self.scene_manager is not None:
+                self.scene_manager.run_scene(self.screen, dt)
+            else:
+                self.update_app(dt)
+                self.render_app()
+
+            # handle screen resize
             if self.keep_ratio_when_resizing:
                 offset_screen = resize_surface_to_display_keep_ratio(self.display, self.screen, return_surf=True)
                 self.display.blit(offset_screen[0], offset_screen[1])
