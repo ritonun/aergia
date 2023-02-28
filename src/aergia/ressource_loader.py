@@ -7,6 +7,7 @@ class RessourceManager:
         self.res_path = ressource_path
         self.tilesets = {}
         self.images = {}
+        self.fonts = {}
 
         # DEBUG
         self.index = 0
@@ -38,6 +39,15 @@ class RessourceManager:
                     image = pygame.transform.scale(image, (image.get_width() * ratio, image.get_height() * ratio))
                 name = get_file_name_from_path(file)
                 self.images[name] = image
+
+    def load_fonts(self, fonts_path):
+        for font_path in fonts_path:
+            fonts = load_folder(self.res_path + font_path)
+            for font in fonts:
+                ext = find_extension(font)
+                name = get_file_name_from_path(font)
+                if ext in [".ttf"]:
+                    self.fonts[name] = font
 
     # DEBUG ONLY
     def draw(self, display):
