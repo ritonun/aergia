@@ -1,6 +1,5 @@
 import os
 import pygame
-from .tools import Animation
 
 
 class RessourceLoader:
@@ -140,6 +139,7 @@ def load_all_graphics(folder_path):
     return images
 
 
+"""
 def load_animations_from_folder(folder_path, tile_width, tile_height, animation_speed, loop, resize_size=1):
     files = load_folder(folder_path)
     tilesets = {}
@@ -152,6 +152,7 @@ def load_animations_from_folder(folder_path, tile_width, tile_height, animation_
         anims[key] = Animation(0, 0, tilesets[key], speed=animation_speed, loop=loop)
 
     return anims
+"""
 
 
 def load_image(path, resize=1):
