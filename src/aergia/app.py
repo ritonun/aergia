@@ -31,14 +31,15 @@ class App:
 
         self.running = True
 
-    def events_handling(self, event):
-        if event.type == pygame.QUIT:
-            self.running = False
+    def events_handling(self, events):
+        for event in events:
+            if event.type == pygame.QUIT:
+                self.running = False
 
-        if self.dev:
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_ESCAPE:
-                    self.running = False
+            if self.dev:
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_ESCAPE:
+                        self.running = False
 
     def update_app(self, dt):
         pass
@@ -56,17 +57,17 @@ class App:
 
         while(self.running):
             dt = self.clock.tick(self.FPS) / 1000
+            events = pygame.event.get()
 
             if self.dev:
                 show_fps(self.clock, self.caption)
 
-            for event in pygame.event.get():
-                self.events_handling(event)
+            self.events_handling(events)
 
             if self.scene_manager is not None:
                 self.display.fill(BLACK)
                 self.screen.fill(BLACK)
-                self.scene_manager.run_scene(self.screen, dt)
+                self.scene_manager.run_scene(events, self.screen, dt)
             else:
                 self.update_app(dt)
                 self.render_app()

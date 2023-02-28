@@ -32,8 +32,7 @@ class SceneManager:
         if len(self.current_scene.switch_scene) > 1:
             self.set_scene(self.current_scene.switch_scene)
 
-    def run_scene(self, display, dt):
-        events = pygame.event.get()
+    def run_scene(self, events, display, dt):
         self.current_scene.handle_input(events)
         self.current_scene.update(dt)
         self.current_scene.render(display)
