@@ -59,6 +59,8 @@ class App:
                 self.events_handling(event)
 
             if self.scene_manager is not None:
+                self.display.fill(BLACK)
+                self.screen.fill(BLACK)
                 self.scene_manager.run_scene(self.screen, dt)
             else:
                 self.update_app(dt)
