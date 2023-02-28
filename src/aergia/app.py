@@ -32,7 +32,7 @@ class App:
         if event.type == pygame.QUIT:
             self.running = False
 
-    def update_app(self):
+    def update_app(self, dt):
         pass
 
     def render_app(self):
@@ -47,9 +47,10 @@ class App:
             self.running = False
 
         while(self.running):
+            dt = self.clock.tick(self.FPS) / 1000
             for event in pygame.event.get():
                 self.events_handling(event)
-            self.update_app()
+            self.update_app(dt)
             self.render_app()
 
             if self.keep_ratio_when_resizing:
@@ -59,5 +60,4 @@ class App:
                 self.display.blit(resize_surface_to_surface(self.display, self.screen), self.screen_pos)
 
             pygame.display.update()
-            self.clock.tick(self.FPS)
         self.cleanup()
