@@ -1,42 +1,6 @@
 import pygame
 
 
-class Animation(pygame.sprite.Sprite):
-    def __init__(self, x, y, image_list, speed=3, loop=False):
-        pygame.sprite.Sprite.__init__(self)
-
-        self.images = image_list
-
-        self.index = 0
-        self.image = self.images[self.index]
-
-        self.rect = self.image.get_rect()
-        self.rect.center = [x, y]
-
-        self.counter = 0
-
-        self.speed = speed
-        self.loop = loop
-
-    def update(self):
-        # update anim
-        self.counter += 1
-
-        if self.counter >= self.speed and self.index < len(self.images) - 1:
-            self.counter = 0
-            self.index += 1
-            self.image = self.images[self.index]
-
-        # if animation complete
-        if self.index >= len(self.images) - 1 and self.counter >= self.speed:
-            if not self.loop:
-                self.kill()
-            else:
-                self.counter = 0
-                self.index = 0
-                self.image = self.images[self.index]
-
-
 def wait_user_input():
     wait = True
     if pygame.mouse.get_pressed()[0]:
