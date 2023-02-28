@@ -1,6 +1,7 @@
 import pygame
 from .graphics import resize_surface_to_surface, resize_surface_to_display_keep_ratio
 from .var import *
+from .debug import show_fps
 
 
 class App:
@@ -55,6 +56,10 @@ class App:
 
         while(self.running):
             dt = self.clock.tick(self.FPS) / 1000
+
+            if self.dev:
+                show_fps(self.clock, self.caption)
+
             for event in pygame.event.get():
                 self.events_handling(event)
 
