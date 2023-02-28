@@ -1,5 +1,6 @@
 import os
 import pygame
+from .gameobject import AnimatedSprite
 
 
 class RessourceManager:
@@ -8,6 +9,7 @@ class RessourceManager:
         self.tilesets = {}
         self.images = {}
         self.fonts = {}
+        self.animations = {}
 
         # DEBUG
         self.index = 0
@@ -49,19 +51,21 @@ class RessourceManager:
                 if ext in [".ttf"]:
                     self.fonts[name] = font
 
-    # DEBUG ONLY
-    def draw(self, display):
-        self.index += 1
-        if self.index % 60 == 0:
-            self.index_tileset += 1
-        if self.index_tileset > len(self.images):
-            self.index_tileset = 0
+    def load_animations(self, animations_path, tile_size):
+        for anim_path in animations_path:
+            if isinstance(anim_path, tuple):
+                animations = load_folder(self.res_path + anim_path)
+            else:
+                animations = load_folder(self.res_path + anim_path)
 
-        count = 0
-        for key in self.images:
-            if count == self.index_tileset:
-                display.blit(self.images[key], (0, 0))
-            count += 1
+            for anim in animations:
+                if isinstance(anim_path, tuple):
+                    anim_tileset = load_tileset_image(anim, anim_path[1][0], anim_path[1][1])[0]
+                else:
+                    anim_tileset = load_tileset_image(anim, tile_size[0], tile_size[1])[0]
+                name = get_file_name_from_path(anim)
+                animation = AnimatedSprite(0, 0, anim_tileset)
+                self.animations[name] = animation
 
 
 def get_file_name_from_path(path):

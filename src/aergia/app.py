@@ -9,6 +9,7 @@ class App:
         self.running = False
         self.display = None
         self.scene_manager = None
+        self.ressource_manager = None
         self.size = self.width, self.height = size
         self.caption = "Aergia Engine Sandbox"
         self.icon = None
