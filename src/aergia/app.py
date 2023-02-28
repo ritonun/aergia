@@ -14,6 +14,8 @@ class App:
         self.keep_ratio_when_resizing = False
         self.FPS = 60
 
+        self.dev = False
+
     def init_app(self):
         pygame.init()
 
@@ -32,6 +34,11 @@ class App:
     def events_handling(self, event):
         if event.type == pygame.QUIT:
             self.running = False
+
+        if self.dev:
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_ESCAPE:
+                    self.running = False
 
     def update_app(self, dt):
         pass
