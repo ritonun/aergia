@@ -26,12 +26,6 @@ class GameObject:
         display.blit(self.image, (self.rect.x, self.rect.y))
 
 
-class Sprite(pygame.sprite.Sprite):
-    def __init__(self, image, sprite_group):
-        self.image = image
-        pygame.sprite.Sprite.__init__(self, sprite_group)
-
-
 class AnimatedSprite(pygame.sprite.Sprite):
     def __init__(self, x, y, image_list, speed=3, loop=False):
         pygame.sprite.Sprite.__init__(self)
