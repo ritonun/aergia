@@ -1,6 +1,18 @@
 Changelog
 ==========================
 
+## 0.0.2
+Unreleased
+
+### Added
+- RessourceLoader()
+	- Load & cache tilesets, images
+
+### Changed
+
+### Removed
+
+
 ## 0.0.1
 Unreleased  
 
