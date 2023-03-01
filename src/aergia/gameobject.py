@@ -67,11 +67,24 @@ class AnimatedSpriteHandler:
         self.animations = animations
         self.sprite_group = sprite_group
 
+    def resize_anim(self, anim_key, resize):
+        if anim_key == "all":
+            for anim in self.animations:
+                image_list = self.animations[anim].images
+                new_image_list = []
+                for img in image_list:
+                    new_image = pygame.transform.scale(img, (img.get_width() * resize, img.get_height() * resize))
+                    new_image_list.append(new_image)
+                self.animations[anim].images = new_image_list
+
     def set_animation(self, new_animation_key):
         for animation_key in self.animations:
             if self.sprite_group.has(self.animations[animation_key]):
-                self.sprite_group.remove(self.animations[animation_key])
+                if self.animations[animation_key] != self.animations[new_animation_key]:
+                    self.sprite_group.remove(self.animations[animation_key])
         self.sprite_group.add(self.animations[new_animation_key])
 
-    def update(self):
-        pass
+    def update(self, new_pos):
+        for anim in self.animations:
+            self.animations[anim].rect.x = new_pos[0]
+            self.animations[anim].rect.y = new_pos[1]
