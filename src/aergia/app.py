@@ -15,6 +15,7 @@ class App:
         self.icon = None
         self.keep_ratio_when_resizing = False
         self.FPS = 60
+        self.screen_ratio = 1
 
         self.dev = False
 
@@ -22,7 +23,9 @@ class App:
         pygame.init()
 
         self.display = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
-        self.screen = pygame.Surface(self.display.get_size(), pygame.SRCALPHA)
+        screen_size = [round(self.display.get_width() / self.screen_ratio),
+                       round(self.display.get_height() / self.screen_ratio)]
+        self.screen = pygame.Surface(screen_size, pygame.SRCALPHA)
         self.screen_pos = [0, 0]
         pygame.display.set_caption(self.caption)
         if self.icon is not None:
