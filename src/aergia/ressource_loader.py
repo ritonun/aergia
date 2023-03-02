@@ -54,15 +54,17 @@ class RessourceManager:
     def load_animations(self, animations_path, tile_size):
         for anim_path in animations_path:
             if isinstance(anim_path, tuple):
-                animations = load_folder(self.res_path + anim_path)
+                animations = load_folder(self.res_path + anim_path[0])
             else:
                 animations = load_folder(self.res_path + anim_path)
 
             for anim in animations:
+                if find_extension(anim) not in [".png", ".jpeg"]:
+                    continue
                 if isinstance(anim_path, tuple):
-                    anim_tileset = load_tileset_image(anim, anim_path[1][0], anim_path[1][1])[0]
+                    anim_tileset = load_tileset_1d(anim, anim_path[1][0], anim_path[1][1])
                 else:
-                    anim_tileset = load_tileset_image(anim, tile_size[0], tile_size[1])[0]
+                    anim_tileset = load_tileset_1d(anim, tile_size[0], tile_size[1])
                 name = get_file_name_from_path(anim)
                 animation = AnimatedSprite(0, 0, anim_tileset)
                 self.animations[name] = animation

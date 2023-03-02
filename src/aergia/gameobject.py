@@ -46,11 +46,13 @@ class AnimatedSprite(pygame.sprite.Sprite):
     def update(self):
         # update anim
         self.counter += 1
+        print(len(self.images))
 
         if self.counter >= self.speed and self.index < len(self.images) - 1:
             self.counter = 0
             self.index += 1
             self.image = self.images[self.index]
+            print('change')
 
         # if animation complete
         if self.index >= len(self.images) - 1 and self.counter >= self.speed:
@@ -66,6 +68,7 @@ class AnimatedSpriteHandler:
     def __init__(self, animations, sprite_group):
         self.animations = animations
         self.sprite_group = sprite_group
+        self.current_anim = ""
 
     def resize_anim(self, anim_key, resize):
         if anim_key == "all":
@@ -78,11 +81,19 @@ class AnimatedSpriteHandler:
                 self.animations[anim].images = new_image_list
 
     def set_animation(self, new_animation_key):
+        for anim in self.animations:
+            if anim != new_animation_key:
+                self.sprite_group.remove(self.animations[anim])
+                self.sprite_group.add(self.animations[new_animation_key])
+        """
         for animation_key in self.animations:
             if self.sprite_group.has(self.animations[animation_key]):
                 if self.animations[animation_key] != self.animations[new_animation_key]:
+                    print('a\na\na\na\na\n')
                     self.sprite_group.remove(self.animations[animation_key])
         self.sprite_group.add(self.animations[new_animation_key])
+        """
+        self.current_anim = new_animation_key
 
     def update(self, new_pos):
         for anim in self.animations:
