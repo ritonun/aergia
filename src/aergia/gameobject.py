@@ -46,13 +46,11 @@ class AnimatedSprite(pygame.sprite.Sprite):
     def update(self):
         # update anim
         self.counter += 1
-        print(len(self.images))
 
         if self.counter >= self.speed and self.index < len(self.images) - 1:
             self.counter = 0
             self.index += 1
             self.image = self.images[self.index]
-            print('change')
 
         # if animation complete
         if self.index >= len(self.images) - 1 and self.counter >= self.speed:
