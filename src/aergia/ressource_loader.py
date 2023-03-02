@@ -53,6 +53,11 @@ class RessourceManager:
 
     def load_animations(self, animations_path, tile_size):
         for anim_path in animations_path:
+            folder_name = get_folder_name_from_path(anim_path)
+
+            if folder_name is not None:
+                self.animations[folder_name] = {}
+
             if isinstance(anim_path, tuple):
                 animations = load_folder(self.res_path + anim_path[0])
             else:
@@ -67,7 +72,22 @@ class RessourceManager:
                     anim_tileset = load_tileset_1d(anim, tile_size[0], tile_size[1])
                 name = get_file_name_from_path(anim)
                 animation = AnimatedSprite(0, 0, anim_tileset)
-                self.animations[name] = animation
+                if folder_name is not None:
+                    self.animations[folder_name][name] = animation
+                else:
+                    self.animations[name] = animation
+
+
+def get_folder_name_from_path(path):
+    number_of_slash = path.count("/")
+    if number_of_slash > 0:
+        slash_pos = path.rfind("/")
+        new_path = path[:slash_pos]
+        second_slash_pos = new_path.rfind("/")
+        folder_name = new_path[second_slash_pos:].replace("/", "")
+        return folder_name
+    else:
+        return None
 
 
 def get_file_name_from_path(path):

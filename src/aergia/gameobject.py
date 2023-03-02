@@ -2,11 +2,18 @@ import pygame
 
 
 class GameObject:
-    def __init__(self, pos, image):
-        self.image = image
-        self.rect = self.image.get_rect()
-        self.rect.x = pos[0]
-        self.rect.y = pos[1]
+    def __init__(self, pos, image=None, rect_size=None):
+        if rect_size is None and image is None:
+            raise TypeError("image & rect can not be None at the same time")
+
+        if image is not None:
+            self.image = image
+            self.rect = self.image.get_rect()
+            self.rect.x = pos[0]
+            self.rect.y = pos[1]
+        else:
+            w, h = rect_size
+            self.rect = pygame.Rect(pos[0], pos[1], w, h)
 
         self.velocity = [0.0, 0.0]
 
@@ -23,7 +30,8 @@ class GameObject:
         self.rect.y += self.velocity[1]
 
     def render(self, display):
-        display.blit(self.image, (self.rect.x, self.rect.y))
+        if self.image is not None:
+            display.blit(self.image, (self.rect.x, self.rect.y))
 
 
 class AnimatedSprite(pygame.sprite.Sprite):
