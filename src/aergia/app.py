@@ -17,6 +17,9 @@ class App:
         self.FPS = 60
         self.screen_ratio = 1
 
+        self.display_filler_color = BLACK
+        self.screen_filler_color = BLACK
+
         self.dev = False
 
     def init_app(self):
@@ -49,8 +52,8 @@ class App:
         pass
 
     def render_app(self):
-        self.display.fill(BLACK)
-        self.screen.fill(WHITE)
+        self.display.fill(self.display_filler_color)
+        self.screen.fill(self.screen_filler_color)
 
     def cleanup(self):
         pygame.quit()
@@ -69,8 +72,8 @@ class App:
             self.events_handling(events)
 
             if self.scene_manager is not None:
-                self.display.fill(BLACK)
-                self.screen.fill(BLACK)
+                self.display.fill(self.display_filler_color)
+                self.screen.fill(self.screen_filler_color)
                 self.scene_manager.run_scene(events, self.screen, dt)
             else:
                 self.update_app(dt)
