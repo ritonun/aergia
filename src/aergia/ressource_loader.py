@@ -35,31 +35,24 @@ class RessourceManager:
                 name = get_file_name_from_path(file)
                 self.tilesets[name] = tileset
 
-    def load_images(self, images_paths):
-        for path in images_paths:
-            full_path = os.path.join(self.res_path, path)
-            files = load_folder(full_path)
-            for file in files:
-                head_path = os.path.split(file)[0]
-                subfolder_name = os.path.split(head_path)[-1]
-                image = pygame.image.load(file).convert_alpha()
-                image_name = get_file_name_from_path(file)
+    def load_images(self, image_folder, subfolders):
+        full_path = os.path.join(self.res_path, image_folder, "")
+        files = load_folder(full_path)
+        for file in files:
+            image_name = get_file_name_from_path(file)
+            image = pygame.image.load(file).convert_alpha()
+            self.images[image_name] = image
 
-        """
-        for image_path in images_paths:
-            if isinstance(image_path, tuple):
-                path = self.res_path + image_path[0]
-            else:
-                path = self.res_path + image_path
-            images_files = load_folder(path)
-            for file in images_files:
+        for subfolder in subfolders:
+            path = os.path.join(full_path, subfolder, "")
+            files = load_folder(path)
+            for file in files:
+                image_name = get_file_name_from_path(file)
                 image = pygame.image.load(file).convert_alpha()
-                if isinstance(image_path, tuple):
-                    ratio = image_path[1]
-                    image = pygame.transform.scale(image, (image.get_width() * ratio, image.get_height() * ratio))
-                name = get_file_name_from_path(file)
-                self.images[name] = image
-        """
+                subname = get_folder_name_from_path(file)
+                if subname not in self.images:
+                    self.images[subname] = {}
+                self.images[subname][image_name] = image
 
     def load_fonts(self, fonts_path):
         for font_path in fonts_path:
