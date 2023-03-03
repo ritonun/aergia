@@ -51,6 +51,14 @@ class AnimatedSprite(pygame.sprite.Sprite):
         self.speed = speed
         self.loop = loop
 
+    def reset(self):
+        self.index = 0
+        self.image = self.images[self.index]
+        self.counter = 0
+        old_center = self.rect.center
+        self.rect = self.image.get_rect()
+        self.rect.center = old_center
+
     def update(self):
         # update anim
         self.counter += 1
@@ -69,6 +77,15 @@ class AnimatedSprite(pygame.sprite.Sprite):
                 self.index = 0
                 self.image = self.images[self.index]
 
+    def resize(self, size):
+        new_image_list = []
+        for i in range(len(self.images)):
+            img = self.images[i].copy()
+            resize_img = pygame.transform.scale(img, (img.get_width() * size, img.get_height() * size))
+            new_image_list.append(resize_img)
+        self.images = new_image_list
+        self.reset()
+
 
 class AnimatedSpriteHandler:
     def __init__(self, animations, sprite_group):
@@ -76,29 +93,16 @@ class AnimatedSpriteHandler:
         self.sprite_group = sprite_group
         self.current_anim = ""
 
-    def resize_anim(self, anim_key, resize):
+    def resize_anim(self, size, anim_key="all"):
         if anim_key == "all":
             for anim in self.animations:
-                image_list = self.animations[anim].images
-                new_image_list = []
-                for img in image_list:
-                    new_image = pygame.transform.scale(img, (img.get_width() * resize, img.get_height() * resize))
-                    new_image_list.append(new_image)
-                self.animations[anim].images = new_image_list
+                self.animations[anim].resize(size)
 
     def set_animation(self, new_animation_key):
         for anim in self.animations:
             if anim != new_animation_key:
                 self.sprite_group.remove(self.animations[anim])
                 self.sprite_group.add(self.animations[new_animation_key])
-        """
-        for animation_key in self.animations:
-            if self.sprite_group.has(self.animations[animation_key]):
-                if self.animations[animation_key] != self.animations[new_animation_key]:
-                    print('a\na\na\na\na\n')
-                    self.sprite_group.remove(self.animations[animation_key])
-        self.sprite_group.add(self.animations[new_animation_key])
-        """
         self.current_anim = new_animation_key
 
     def update(self, new_pos):
