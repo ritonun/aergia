@@ -15,6 +15,14 @@ class RessourceManager:
         self.index = 0
         self.index_tileset = 0
 
+    def _load_res(self):
+        pass
+        """
+        - all path with os.join.path
+        - load folder + res in folder
+        (path, subfolder=None) -> if subfolder, self.images[subfolder] = img
+        """
+
     def load_tilesets(self, tilesets_path, tile_width, tile_height):
         if isinstance(tilesets_path, list) is False:
             raise TypeError("tilesets_path must be a list of path")
@@ -28,6 +36,16 @@ class RessourceManager:
                 self.tilesets[name] = tileset
 
     def load_images(self, images_paths):
+        for path in images_paths:
+            full_path = os.path.join(self.res_path, path)
+            files = load_folder(full_path)
+            for file in files:
+                head_path = os.path.split(file)[0]
+                subfolder_name = os.path.split(head_path)[-1]
+                image = pygame.image.load(file).convert_alpha()
+                image_name = get_file_name_from_path(file)
+
+        """
         for image_path in images_paths:
             if isinstance(image_path, tuple):
                 path = self.res_path + image_path[0]
@@ -41,6 +59,7 @@ class RessourceManager:
                     image = pygame.transform.scale(image, (image.get_width() * ratio, image.get_height() * ratio))
                 name = get_file_name_from_path(file)
                 self.images[name] = image
+        """
 
     def load_fonts(self, fonts_path):
         for font_path in fonts_path:
@@ -79,26 +98,27 @@ class RessourceManager:
 
 
 def get_folder_name_from_path(path):
-    number_of_slash = path.count("/")
-    if number_of_slash > 0:
-        slash_pos = path.rfind("/")
-        new_path = path[:slash_pos]
-        second_slash_pos = new_path.rfind("/")
-        folder_name = new_path[second_slash_pos:].replace("/", "")
+    try:
+        head, base = os.path.split(path)
+        if find_extension(base) is None:
+            return base
+        folder_name = os.path.split(head)[-1]
         return folder_name
-    else:
+    except Exception:
         return None
 
 
 def get_file_name_from_path(path):
-    file_name_index = path.rfind("/")
-    file_name = path[file_name_index:]
-    file_name = file_name.replace("/", "").replace(find_extension(file_name), "")
-    return file_name
+    base = os.path.split(path)[-1]
+    ext = find_extension(base)
+    name = base.replace(ext, "")
+    return name
 
 
 def find_extension(name):
     name_index = name.rfind('.')
+    if name_index == -1:
+        return None
     ext = name[name_index:]
     return ext
 
@@ -176,22 +196,6 @@ def load_all_graphics(folder_path):
             name = name[:point]
             images[name] = image
     return images
-
-
-"""
-def load_animations_from_folder(folder_path, tile_width, tile_height, animation_speed, loop, resize_size=1):
-    files = load_folder(folder_path)
-    tilesets = {}
-    for file in files:
-        name = file.split('/')[-1].split('.')[0]
-        tilesets[name] = load_tileset_1d(file, tile_width, tile_height, resize=resize_size)
-
-    anims = {}
-    for key in tilesets:
-        anims[key] = Animation(0, 0, tilesets[key], speed=animation_speed, loop=loop)
-
-    return anims
-"""
 
 
 def load_image(path, resize=1):
