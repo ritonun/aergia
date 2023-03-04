@@ -23,7 +23,7 @@ class RessourceManager:
         (path, subfolder=None) -> if subfolder, self.images[subfolder] = img
         """
 
-    def load_tilesets(self, tileset_folder, subfolders, tile_width, tile_height):
+    def load_tilesets(self, tileset_folder, tile_width, tile_height, subfolders=[]):
         subfolders = list(subfolders)
         full_path = os.path.join(self.res_path, tileset_folder, "")
         files = load_folder(full_path)
@@ -43,7 +43,8 @@ class RessourceManager:
                     self.tilesets[subname] = {}
                 self.tilesets[subname][tileset_name] = tileset
 
-    def load_images(self, image_folder, subfolders):
+    def load_images(self, image_folder, subfolders=[]):
+        subfolders = list(subfolders)
         full_path = os.path.join(self.res_path, image_folder, "")
         files = load_folder(full_path)
         for file in files:
