@@ -71,31 +71,27 @@ class RessourceManager:
                     self.fonts[subname] = {}
                 self.fonts[subname][font_name] = font
 
-    def load_animations(self, animations_path, tile_size):
-        for anim_path in animations_path:
-            folder_name = get_folder_name_from_path(anim_path)
+    def load_animations(self, animation_folder, tile_width, tile_height, subfolders=[]):
+        subfolders = list(subfolders)
+        full_path = os.path.join(self.res_path, animation_folder, "")
+        files = load_folder(full_path)
+        for file in files:
+            animation_name = get_file_name_from_path(file)
+            animation_tileset = load_tileset_1d(file, tile_width, tile_height)
+            animation = AnimatedSprite(0, 0, animation_tileset)
+            self.animations[animation_name] = animation
 
-            if folder_name is not None:
-                self.animations[folder_name] = {}
-
-            if isinstance(anim_path, tuple):
-                animations = load_folder(self.res_path + anim_path[0])
-            else:
-                animations = load_folder(self.res_path + anim_path)
-
-            for anim in animations:
-                if find_extension(anim) not in [".png", ".jpeg"]:
-                    continue
-                if isinstance(anim_path, tuple):
-                    anim_tileset = load_tileset_1d(anim, anim_path[1][0], anim_path[1][1])
-                else:
-                    anim_tileset = load_tileset_1d(anim, tile_size[0], tile_size[1])
-                name = get_file_name_from_path(anim)
-                animation = AnimatedSprite(0, 0, anim_tileset)
-                if folder_name is not None:
-                    self.animations[folder_name][name] = animation
-                else:
-                    self.animations[name] = animation
+        for subfolder in subfolders:
+            path = os.path.join(full_path, subfolder, "")
+            files = load_folder(path)
+            for file in files:
+                animation_name = get_file_name_from_path(file)
+                animation_tileset = load_tileset_1d(file, tile_width, tile_height)
+                animation = AnimatedSprite(0, 0, animation_tileset)
+                subname = get_folder_name_from_path(file)
+                if subname not in self.animations:
+                    self.animations[subname] = {}
+                self.animations[subname][animation_name] = animation
 
 
 def get_folder_name_from_path(path):
