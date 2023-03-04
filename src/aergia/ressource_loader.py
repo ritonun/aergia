@@ -23,17 +23,25 @@ class RessourceManager:
         (path, subfolder=None) -> if subfolder, self.images[subfolder] = img
         """
 
-    def load_tilesets(self, tilesets_path, tile_width, tile_height):
-        if isinstance(tilesets_path, list) is False:
-            raise TypeError("tilesets_path must be a list of path")
+    def load_tilesets(self, tileset_folder, subfolders, tile_width, tile_height):
+        subfolders = list(subfolders)
+        full_path = os.path.join(self.res_path, tileset_folder, "")
+        files = load_folder(full_path)
+        for file in files:
+            tileset_name = get_file_name_from_path(file)
+            tileset = load_tileset_image(file, tile_width, tile_height)
+            self.tilesets[tileset_name] = tileset
 
-        for tileset_path in tilesets_path:
-            path = self.res_path + tileset_path
-            tileset_files = load_folder(path)
-            for file in tileset_files:
+        for subfolder in subfolders:
+            path = os.path.join(full_path, subfolder, "")
+            files = load_folder(path)
+            for file in files:
+                tileset_name = get_file_name_from_path(file)
                 tileset = load_tileset_image(file, tile_width, tile_height)
-                name = get_file_name_from_path(file)
-                self.tilesets[name] = tileset
+                subname = get_folder_name_from_path(file)
+                if subname not in self.tilesets:
+                    self.tilesets[subname] = {}
+                self.tilesets[subname][tileset_name] = tileset
 
     def load_images(self, image_folder, subfolders):
         full_path = os.path.join(self.res_path, image_folder, "")
