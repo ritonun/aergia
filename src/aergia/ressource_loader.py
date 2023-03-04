@@ -11,18 +11,6 @@ class RessourceManager:
         self.fonts = {}
         self.animations = {}
 
-        # DEBUG
-        self.index = 0
-        self.index_tileset = 0
-
-    def _load_res(self):
-        pass
-        """
-        - all path with os.join.path
-        - load folder + res in folder
-        (path, subfolder=None) -> if subfolder, self.images[subfolder] = img
-        """
-
     def load_tilesets(self, tileset_folder, tile_width, tile_height, subfolders=[]):
         subfolders = list(subfolders)
         full_path = os.path.join(self.res_path, tileset_folder, "")
@@ -63,14 +51,25 @@ class RessourceManager:
                     self.images[subname] = {}
                 self.images[subname][image_name] = image
 
-    def load_fonts(self, fonts_path):
-        for font_path in fonts_path:
-            fonts = load_folder(self.res_path + font_path)
-            for font in fonts:
-                ext = find_extension(font)
-                name = get_file_name_from_path(font)
-                if ext in [".ttf"]:
-                    self.fonts[name] = font
+    def load_fonts(self, fonts_folder, subfolders=[]):
+        subfolders = list(subfolders)
+        full_path = os.path.join(self.res_path, fonts_folder, "")
+        files = load_folder(full_path)
+        for file in files:
+            font_name = get_file_name_from_path(file)
+            font = file
+            self.fonts[font_name] = font
+
+        for subfolder in subfolders:
+            path = os.path.join(full_path, subfolder, "")
+            files = load_folder(path)
+            for file in files:
+                font_name = get_file_name_from_path(file)
+                font = file
+                subname = get_folder_name_from_path(file)
+                if subname not in self.tilesets:
+                    self.fonts[subname] = {}
+                self.fonts[subname][font_name] = font
 
     def load_animations(self, animations_path, tile_size):
         for anim_path in animations_path:
