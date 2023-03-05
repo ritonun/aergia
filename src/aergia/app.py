@@ -5,6 +5,28 @@ from .debug import show_fps
 
 
 class App:
+    """Class to handle the app itself.
+
+    Attributes:
+        caption (str): Caption of the app, displayed at the top of the window
+        clock (Clock): clock that handle fps in the game
+        dev (bool): debug mode for special options
+        display (surface): app display configured with pygame.set_mode()
+        display_filler_color (tuple): RGB color
+        FPS (int): number of frame per second
+        icon (surface): default is None, else is a image (max 32x32) that serve as an icon
+        keep_ratio_when_resizing (bool): If true, in case of a resize of the display,
+                                         the draw surface is scaled to keep its ratio and avoid deformation.
+        ressource_manager (object): An instance of the RessourceManager() class
+        running (bool): If set to false, the app quit.
+        scene_manager (object): An instance of the SceneManager() class
+        screen (surface): Surface on which everything is drawed on, before being scaled to display size
+        screen_filler_color (tuple): Background color of the screen surface
+        screen_pos (list): Screen pos (should be [0, 0] unless for special effect like a screen shake)
+        screen_ratio (int): Ratio between the screen size and the dimesion of the app
+        size (tuple): Size of the display (width, height)
+    """
+
     def __init__(self, size=(1000, 600)):
         self.running = False
         self.display = None
@@ -23,6 +45,8 @@ class App:
         self.dev = False
 
     def init_app(self):
+        """Initialize all the variable necessary to run the application
+        """
         pygame.init()
 
         self.display = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
@@ -39,6 +63,11 @@ class App:
         self.running = True
 
     def events_handling(self, events):
+        """Handle pygame events
+
+        Args:
+            events (events): list of pygame events
+        """
         for event in events:
             if event.type == pygame.QUIT:
                 self.running = False
@@ -49,16 +78,27 @@ class App:
                         self.running = False
 
     def update_app(self, dt):
+        """Update the app
+
+        Args:
+            dt (float): delta time between two frame
+        """
         pass
 
     def render_app(self):
+        """Render the app
+        """
         self.display.fill(self.display_filler_color)
         self.screen.fill(self.screen_filler_color)
 
     def cleanup(self):
+        """Action to perform when the app quit
+        """
         pygame.quit()
 
     def mainloop(self):
+        """Mainloop of the app. Run forever until quit event.
+        """
         if self.init_app() is False:
             self.running = False
 

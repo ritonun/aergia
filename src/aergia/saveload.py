@@ -33,7 +33,7 @@ class SaveLoadSystem:
             file_key (str): file name in the self.files dict
 
         Returns:
-            dict: Return the data contains in the .json file
+            data (dict): Return the data contains in the .json file
         """
         data = None
         with open(self.get_path(file_key), "r") as f:
