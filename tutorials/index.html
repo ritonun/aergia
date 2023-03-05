@@ -60,6 +60,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#tutorials" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -163,10 +168,43 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         Tutorials
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    Quickstart
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -234,6 +272,23 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    Quickstart
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -247,9 +302,43 @@
                 
 
 
-  <h1>Tutorials</h1>
+<h1 id="tutorials">Tutorials</h1>
+<h2 id="quickstart">Quickstart</h2>
+<p>Project Structure:  </p>
+<pre><code>project_name
+|_res/
+  |_tileset/
+    |_tileset.png
+  |_fonts/
+    |_arial.ttf 
+  |_images/
+    |_player/
+      |_up.png
+      |_down.png
+    |_mob/
+      |_slime.png
 
+</code></pre>
+<p>Example:  </p>
+<pre><code>import os
+from aergia import *
+from local_file import Scene1, Scene2
 
+app = App()
+
+# Load Ressources
+app.ressource_manager = RessourceManager(ressource_path=os.path.join(&quot;..&quot;, &quot;res&quot;, &quot;&quot;))
+ressource_manager.load_tilesets(&quot;tileset&quot;, tile_width, tile_height)
+ressource_manager.load_images(&quot;images&quot;, subfolders=[&quot;player&quot;, &quot;slime&quot;])
+ressource_manager.load_fonts(&quot;fonts&quot;)
+
+# Init the scene
+scenes = {&quot;scene1&quot;: Scene1(), &quot;scene2&quot;: Scene2}
+app.scene_manager = SceneManager(scenes, &quot;scene1&quot;)
+
+# Run the app
+app.mainloop() 
+</code></pre>
 
               
             </article>
