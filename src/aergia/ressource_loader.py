@@ -16,6 +16,8 @@ class RessourceManager:
         full_path = os.path.join(self.res_path, tileset_folder, "")
         files = load_folder(full_path)
         for file in files:
+            if find_extension(file) not in [".png", ".jpeg"]:
+                continue
             tileset_name = get_file_name_from_path(file)
             tileset = load_tileset_image(file, tile_width, tile_height)
             self.tilesets[tileset_name] = tileset
@@ -24,6 +26,8 @@ class RessourceManager:
             path = os.path.join(full_path, subfolder, "")
             files = load_folder(path)
             for file in files:
+                if find_extension(file) not in [".png", ".jpeg"]:
+                    continue
                 tileset_name = get_file_name_from_path(file)
                 tileset = load_tileset_image(file, tile_width, tile_height)
                 subname = get_folder_name_from_path(file)
