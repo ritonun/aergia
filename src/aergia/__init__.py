@@ -1,7 +1,7 @@
 import pygame
 
 if pygame.version.vernum < (2, 1, 2):
-    print("Warning ! This game is made for pygame version {}! You are on an older version.".
+    print("Warning ! This game is made for pygame-ce version {}! You are on an older version.".
           format(pygame.version.vernum))
 
 from .var import *  # noqa
